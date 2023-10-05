@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button>Light/Dark</button>
+    <main>
+        <h1>Welcome to your Dashboard <span id="username"></span></h1>
+        <input type="text" id="" placeholder="Title"><br><br>
+        <textarea name="" id="" cols="30" rows="10" placeholder="Content"></textarea><br><br>
+        <button>Add Post</button>
+    </main>
+</body>
+</html>
+
+<script>
+    // Implement a logout button
+    // Create more than one user
+    // Authorize a user for dashboard
+    // 
+    let regUser = JSON.parse(localStorage.getItem("regUser"))
+    console.log(regUser);
+
+    username.innerHTML = regUser.username
+</script>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <h1>Login</h1>
+        <input id="email" type="email" placeholder="Email"><br><br>
+        <input id="password" type="password" placeholder="****"><br><br>
+        <button onclick="login(event)">Login</button>
+    </form>
+</body>
+</html>
+
+<script>
+    let regUser = JSON.parse(localStorage.getItem("regUser"))
+    console.log(regUser);
+    let email = document.getElementById("email");
+    let password = document.getElementById("password");
+
+    function login(ev){
+        ev.preventDefault();
+        if(email.value != regUser.email || password.value != regUser.password){
+            alert("User not found")
+        }else{
+            alert("Login successful")
+            window.location.href = "dashboard.html"
+        }
+    }
+</script>
