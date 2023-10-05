@@ -40,7 +40,7 @@
     let email = document.getElementById("email")
     let password = document.getElementById("password")
     let c_pass = document.getElementById("c_pass")
-    let regUser = localStorage.getItem("regUser") || []
+    let regUser = JSON.parse(localStorage.getItem("regUser")) || []
 
     console.log(regUser);
 
@@ -54,6 +54,7 @@
             password: password.value,
             c_pass: c_pass.value
         }
+        
         if(username.value == "" || email.value == "" || password.value == ""){
             alert("Input fields cannot be empty")
         }else if(password.value.length < 8){

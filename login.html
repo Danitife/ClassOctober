@@ -23,10 +23,13 @@
 
     function login(ev){
         ev.preventDefault();
-        if(email.value != regUser.email || password.value != regUser.password){
+        let found = regUser.find((el)=> el.email == email.value && el.password == password.value)
+        console.log(found);
+        if(found == undefined){
             alert("User not found")
         }else{
             alert("Login successful")
+            localStorage.setItem("currUser", JSON.stringify(found))
             window.location.href = "dashboard.html"
         }
     }
