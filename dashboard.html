@@ -57,14 +57,33 @@
 </html>
 
 <script>
-    let obj = {
-        name: "Dan",
-        age: 2
-    }
-    disPost.innerHTML = obj.name
+    // Complete your cbt... (Select answers and calculate the total score of the player, set a timer to 60sec for the whole CBT)
+    // Display liked blog
+    // Alarm Clock
+    // Lock screen phone
+    // forEach find filter map reduce 
+
+
     let arr = []
-    let arrObj = [{name: "Vic"}, {name: "Sam"}]
     let arrStr = ["Who", "When", "How"]
+
+    let arrFind = [
+        {name: "Dan", no: 1},
+        {name: "Sam", no: 2},
+        {name: "Dan", no: 2},
+    ]
+    let finding = arrFind.find((el)=> el.name == "Dan")
+    console.log(finding)
+
+    let filtering = arrFind.filter((el)=> el.name == "Dan")
+    console.log(filtering);
+    // for (let index = 0; index < arrStr.length; index++) {
+    //     const element = arrStr[index];
+    //     disPost.innerHTML += element
+    // }
+    arrStr.forEach((el, i)=>{
+        disPost.innerHTML += i + " " +el
+    })
     console.log(arrStr);
     arrStr.splice(1, 1)
     console.log(arrStr);
@@ -73,10 +92,6 @@
     let arrArr = [["uiyt"], ["iuytr"], ["iouytr"]]
     let arrNum = [2,3,4,5,6,7,8]
 
-    for (let index = 0; index < arrObj.length; index++) {
-        const element = arrObj[index];
-        disPost.innerHTML += element.name
-    }
 
     let currUser= JSON.parse(localStorage.getItem("currUser"))
     let title = document.getElementById("title")
@@ -142,8 +157,8 @@
                     <img class="w-100" src="${el.img}" />
                     <p>${el.content}</p> 
                     <div>
-                        <button>Like</button>    
-                        <button>Show more</button>    
+                        <button class="btn btn-${el.isLiked? "secondary": "primary"}" onclick="likePost(${index})">${el.isLiked? "UnLike" : "Like"}</button>    
+                        <button class="btn btn-${el.isLiked == true ? "success": "danger"}">Show more</button>    
                     </div>
                 </div>
             `
@@ -157,5 +172,17 @@
         existingPost.splice(i, 1)
         localStorage.setItem("post", JSON.stringify(existingPost))
         showPost()
+    }
+
+    function likePost(i){
+        console.log(existingPost[i]);
+        // console.log(existingPost[i].isLiked);
+        existingPost[i].isLiked = !existingPost[i].isLiked
+        localStorage.setItem("post", JSON.stringify(existingPost))
+        showPost()
+
+        
+        // let found = existingPost.find((el)=> el[i] == i);
+        // console.log(found);
     }
 </script>
