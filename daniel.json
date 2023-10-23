@@ -1,0 +1,35 @@
+{
+  "posts": [],
+  "users": [
+    {
+      "username": "Edited",
+      "email": "another@gmail.com",
+      "password": "another",
+      "id": 1
+    },
+    {
+      "username": "Daniel",
+      "email": "daniel@gmail.com",
+      "password": "daniel",
+      "id": 2
+    },
+    {
+      "username": "Target",
+      "email": "target@gmail.com",
+      "password": "tartget",
+      "id": 3
+    },
+    {
+      "username": "Check",
+      "email": "check@gmail.com",
+      "password": "check",
+      "id": 4
+    },
+    {
+      "username": "Test",
+      "email": "test@gmail.com",
+      "password": "test",
+      "id": 5
+    }
+  ]
+}

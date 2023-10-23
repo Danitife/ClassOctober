@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+    <form action="">
+        <h1>Create User</h1>
+        <input id="username" type="text" placeholder="Username"><br><br>
+        <input id="email" type="email" placeholder="Email"><br><br>
+        <input id="password" type="password" placeholder="****"><br><br>
+        <button onclick="createUser(event)">Create User</button>
+    </form>
+
+    <form id="editForm" action="">
+        <h1>Edit User</h1>
+        <input id="usernameEdit" type="text" placeholder="Username"><br><br>
+        <input id="emailEdit" type="email" placeholder="Email"><br><br>
+        <input id="passwordEdit" type="password" placeholder="****"><br><br>
+        <button onclick="editChanges(event)">Update</button>
+    </form>
+
+    <div id="userInfo"></div>
+
+</body>
+</html>
+
+<script>
+    fetch("https://dummyjson.com/quotes/random").then(res=> res.json())
+    .then(data=>{
+        console.log(data);
+    }).catch(err=>{
+        console.log(err);
+    })
+
+    let username = document.getElementById("username")
+    let email = document.getElementById("email")
+    let password = document.getElementById("password")
+
+    let usernameEdit = document.getElementById("usernameEdit")
+    let emailEdit = document.getElementById("emailEdit")
+    let passwordEdit = document.getElementById("passwordEdit")
+    let allUser;
+    let user_id
+
+    editForm.style.display = "none"
+
+    function createUser(ev){
+        ev.preventDefault();
+        ev.target.innerHTML = `
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        `
+        let user = {
+            username: username.value,
+            email: email.value,
+            password: password.value
+        }
+
+        fetch("http://localhost:2222/users", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(user)
+        }).then((res)=>res.json())
+        .then((data)=>{
+            console.log(data);
+            alert("User Created")
+            ev.target.innerHTML = "Create User"
+        }).catch((err)=>{
+            console.log(err);
+            alert("Something went wrong")
+        })
+    }
+
+    function fetchUser(){
+        console.log("iuytr");
+        fetch("http://localhost:2222/users").then((res)=> res.json())
+        .then((data)=>{
+            console.log(data);
+            allUser = data;
+
+            allUser.forEach(element => {
+                userInfo.innerHTML += `
+                    <h1>${element.username} <button onclick="editUser(${element.id})">Edit</button></h1>
+                `
+            });
+        }).catch((err)=>{
+            console.log(err);
+        })
+    }
+
+    fetchUser()
+
+    function editUser(id){
+        console.log(id);
+        editForm.style.display = "block";
+        user_id = id
+    }
+
+    function editChanges(ev){
+        ev.preventDefault();
+        let edited = {
+            username: usernameEdit.value,
+            email: emailEdit.value,
+            password: passwordEdit.value
+        }
+
+        fetch(`http://localhost:2222/users/${user_id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(edited)
+        }).then((res)=> res.json())
+        .then((data)=>{
+            console.log(data);
+            alert("Edit Successful")
+            editForm.style.display = "none";
+            fetchUser()
+        }).catch((err)=>{
+            console.log(err);
+        })
+    }
+</script>
