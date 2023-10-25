@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <main>
+        <h1>One User</h1>
+        <div id="gottenUser"></div>
+    </main>
+
+    <input type="file" onchange="pickFile(event)">
+    <img id="readerImg" width="200" alt="">
+    <button onclick="dispImg()">Display Img</button>
+
+
+    <form>
+        <div>
+          Your order is ₦54,600
+        </div>
+        <button type="button" id="start-payment-button" onclick="makePayment()">Pay Now</button>
+      </form>
+</body>
+</html>
+
+<script src="https://checkout.flutterwave.com/v3.js"></script>
+<script>
+    function makePayment() {
+    FlutterwaveCheckout({
+      public_key: "FLWPUBK_TEST-1c3c1a94b35399bcebf25488ba33ca32-X",
+      tx_ref: "titanic-48981487343MDI0NzMx",
+      amount: 54600,
+      currency: "NGN",
+      payment_options: "card, banktransfer, ussd",
+      redirect_url: "https://glaciers.titanic.com/handle-flutterwave-payment",
+      meta: {
+        consumer_id: 23,
+        consumer_mac: "92a3-912ba-1192a",
+      },
+      customer: {
+        email: "rose@unsinkableship.com",
+        phone_number: "08102909304",
+        name: "Rose DeWitt Bukater",
+      },
+      customizations: {
+        title: "The Titanic Store",
+        description: "Payment for an awesome cruise",
+        logo: "https://www.logolynx.com/images/logolynx/22/2239ca38f5505fbfce7e55bbc0604386.jpeg",
+      },
+    });
+  }
+    let food_img;
+    function pickFile(ev){
+        // console.log(ev.target.files);
+        let file = ev.target.files[0]
+        let reader = new FileReader()
+        reader.addEventListener("load", (e)=>{
+            let result = e.target.result;
+            food_img = result
+        })
+        if(file){
+            reader.readAsDataURL(file)
+        }
+    }
+
+    function dispImg(){
+        readerImg.src = food_img
+    }
+    let uid = localStorage.getItem("userID")
+    console.log(uid);
+
+    function fetchUser(){
+        // fetch(`https://dummyjson.com/users/${uid}`).then(res=>res.json())
+        // .then(data=>{
+        //     console.log(data);
+        // }).catch(err=>{
+        //     console.log(err);
+        // })
+        fetch(`https://dummyjson.com/users`).then(res=>res.json())
+        .then(data=>{
+            console.log(data);
+            let foundUser = data.users.find((el)=> el.id == uid)
+            console.log(foundUser);
+            gottenUser.innerHTML = `
+                <img src="${foundUser.image}" />
+            `
+        }).catch(err=>{
+            console.log(err);
+        })
+        
+    }
+    fetchUser()
+</script>
